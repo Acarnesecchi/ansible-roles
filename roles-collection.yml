@@ -3,9 +3,10 @@
   hosts: cloudServers
   become: true
 
+  vars:
+   app_src: ./TFGNNSnakeFlappy
+   build_command: docker build -t flappy /tmp/TFGNNSnakeFlappy
+   run_command: docker run --name flappy -it -d -p 5000:5000 flappy
+
   roles: 
-   - role: docker-provision
-   
-   - role: docker-build
-   
-   - role: docker-run
+   - role: docker

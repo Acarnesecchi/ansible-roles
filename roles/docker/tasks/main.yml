@@ -1,0 +1,26 @@
+---
+- name: Add Docker repository
+  get_url:
+   url: https://download.docker.com/linux/centos/docker-ce.repo
+   dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: Install Docker
+  package:
+   name: docker-ce
+   state: latest
+
+- name: Start Docker
+  systemd:
+   name: docker
+   state: started
+
+- name: Copy app to remote
+  synchronize:
+   src: "{{ app_src }}"
+   dest: /tmp
+
+- name: Build container image
+  command: "{{ build_command }}"
+
+- name: Run the docker image
+  command: "{{ run_command }}"
