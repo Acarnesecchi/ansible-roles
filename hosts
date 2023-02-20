@@ -1,0 +1,2 @@
+[cloudServers]
+ansible-test.ddns.net ansible_user=vagrant

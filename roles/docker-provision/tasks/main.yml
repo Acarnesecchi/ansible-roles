@@ -1,0 +1,36 @@
+---
+- name: Check if Docker is installed
+  command: docker --version
+  register: docker_version
+  ignore_errors: true
+
+- name: Remove Docker if installed
+  yum:
+   name:
+    - docker
+    - docker-client
+    - docker-client-latest
+    - docker-common
+    - docker-latest
+    - docker-latest-logrotate
+    - docker-logrotate
+    - docker-engine
+   state: absent
+  when: docker_version.rc == 0 
+
+- name: Install yum-utils
+  yum:
+   name: 
+    - yum-utils
+   state: latest
+
+- name: Add Docker repository
+  get_url:
+   url: https://download.docker.com/linux/centos/docker-ce.repo
+   dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: Install Docker
+  package:
+   name: docker-ce
+   state: latest
+

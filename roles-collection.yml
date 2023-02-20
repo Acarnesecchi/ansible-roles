@@ -1,0 +1,9 @@
+---
+- name: Collection of roles
+  hosts: cloudServers
+  become: true
+  collections: 
+   - community.docker
+
+  roles: 
+   - role: docker-provision
