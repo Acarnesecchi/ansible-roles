@@ -1,0 +1,8 @@
+---
+- name: Copy app to remote
+  synchronize:
+   src: ./TFGNNSnakeFlappy
+   dest: /tmp
+
+- name: Build container image
+  command: docker build -t flappy /tmp/TFGNNSnakeFlappy
